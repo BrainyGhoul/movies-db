@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "rest_framework",
-    "backend.apps.BackendConfig"
+    "backend.apps.BackendConfig",
+    "frontend.apps.FrontendConfig"
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = "backend.User"
 
 WSGI_APPLICATION = 'moviesDB.wsgi.application'
 

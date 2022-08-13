@@ -4,8 +4,8 @@ from . import variables
 
 
 class User(AbstractUser):
-    user_type = models.Choices(variables.user_types)
-    role = models.Choices(variables.roles)
+    user_type = models.CharField(max_length=16, choices=variables.user_types)
+    role = models.CharField(max_length=16, choices=variables.roles)
 
 # tags associated with titles. for example thriller, action
 class Tag(models.Model):
@@ -18,9 +18,9 @@ class Title(models.Model):
     release_date = models.DateField()
     region = models.CharField(max_length=64)
     language = models.CharField(max_length=32)
-    titleType = models.Choices(variables.titleTypes)
+    titleType = models.CharField(max_length=16, choices=variables.titleTypes)
     length = models.DurationField()
-    rating = models.IntegerField(min_value=variables.min_rating, max_value=variables.max_rating)
+    rating = models.IntegerField()
     tags = models.ManyToManyField(Tag, related_name="title")
     writers = models.ManyToManyField(User, related_name="titles_written")
     directors = models.ManyToManyField(User, related_name="titles_directed")
@@ -32,7 +32,7 @@ class Review(models.Model):
     movie = models.ForeignKey(Title, on_delete=models.CASCADE, related_name="review")
     title = models.TextField(max_length=variables.review_title_length)
     text = models.TextField()
-    rating = models.IntegerField(min_value=variables.min_rating, max_value=variables.max_rating)
+    rating = models.IntegerField()
     likes = models.ManyToManyField(User, related_name="liked_review")
 
 # the watchlists created by users
