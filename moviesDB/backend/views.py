@@ -1,41 +1,27 @@
+# This file and app is just for backend and data handling
+
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from rest_framework.views import APIView
-from rest_framework import response
+from rest_framework.response import Response
 import json
 from . import serializers
 from . import models
 
-
-# this is the main view
-def index(request, *args, **kwargs):
-
-    # redirecting logged out users to login page
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
-
-    return render(request, "frontend/index.html")
-
+# providing user info
+def user_info(request):
+    return JsonResponse({"is_authenticated": request.user.is_authenticated})
 
 
 # registering users
 class RegisterUser(APIView):
     serializer_class = serializers.RegisterUser
 
-    # when the user load the register page
-    def get(self, request):
-
-        # redirecting the registered users to home since they are already registered
-        if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse("home"))
-
-        return render(request, "frontend/index.html")
-
     # when the user submits registration form
-    def post(self, request):
+    def post(self, request, format=None):
 
         # validating the data
         serializer = self.serializer_class(data=request.POST)
@@ -83,13 +69,6 @@ class RegisterUser(APIView):
 class LoginUser(APIView):
     serializer_class = serializers.LoginUserByUsername
 
-    # loading the login page
-    def get(self, request):
-
-        # redirecting the registered users to home since they are already registered
-        if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse("home"))
-        render(request, "frontend/index.html")
     
     # logging in the user
     def post(self, request):
