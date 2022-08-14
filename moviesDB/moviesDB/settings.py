@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "rest_framework",
+    'oauth2_provider',
     "backend.apps.BackendConfig",
     "frontend.apps.FrontendConfig"
 ]
@@ -104,6 +105,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# adding oauth as default authenticator
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    ]
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
