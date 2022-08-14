@@ -8,10 +8,6 @@ titleTypes = [(0, "Movie"), (1, "TVSeries"), (2, "TVEpisode")]
 max_rating = 10
 min_rating = 1
 
-
-# user types. maximum length is 16
-user_types = [(0, "user"), (1, "celebrity"), (2, "staff")]
-
 # length of the name of watchlist
 watchlist_name_length = 32
 

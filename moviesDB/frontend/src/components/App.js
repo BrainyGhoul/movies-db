@@ -10,6 +10,7 @@ import ProfilePage from "./ProfilePage";
 import TitlePage from "./TitlePage";
 import WatchlistPage from "./WatchlistPage";
 import RegisterPage from "./RegisterPage";
+import LoginPage from "./login";
 import {
     BrowserRouter as Router,
     Routes,
@@ -32,7 +33,8 @@ export default class App extends Component {
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/title" element={<TitlePage />} />
-                    <Route path="/Watchlist" element={<WatchlistPage />} />
+                    <Route path="/watchlist" element={<WatchlistPage />} />
+                    <Route path="/login" element={<LoginPage />} />
                 </Routes>
             </Router>
         )

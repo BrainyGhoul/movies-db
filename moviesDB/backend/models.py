@@ -4,7 +4,7 @@ from . import variables
 
 
 class User(AbstractUser):
-    user_type = models.CharField(max_length=16, choices=variables.user_types)
+    is_celebrity = models.BooleanField(default=False)
     role = models.CharField(max_length=16, choices=variables.roles)
 
 # tags associated with titles. for example thriller, action
