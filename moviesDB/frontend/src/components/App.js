@@ -32,22 +32,20 @@ export default class App extends Component {
         this.user_info()
         return (
             <Router>
-                <Routes>
-                    { this.state.user_info.is_authenticated ?
-                        // the user can access these pages if theyre logged in
-                        <div id="loggedin-menu">
+                { this.state.user_info.is_authenticated ?
+                    // the user can access these pages if theyre logged in
+                    <Routes>
                             <Route path="/" element={<HomePage />} />
                             <Route path="/profile" element={<ProfilePage />} />
                             <Route path="/title" element={<TitlePage />} />
                             <Route path="/watchlist" element={<WatchlistPage />} />
-                        </div> :
-                        // user can access these pages if theyre no logged in
-                        <div>
-                            <Route path="/register" element={<RegisterPage />} />
-                            <Route path="/login" element={<LoginPage />} />
-                        </div>
-                    }
-                </Routes>
+                    </Routes> :
+                    // user can access these pages if theyre no logged in
+                    <Routes>
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/login" element={<LoginPage />} />
+                    </Routes>
+                }
             </Router>
         )
     }
@@ -62,7 +60,7 @@ export default class App extends Component {
                 return response.json();
             }
     )}
-
+    
     
 }
 
