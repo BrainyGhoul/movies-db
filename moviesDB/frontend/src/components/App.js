@@ -10,7 +10,7 @@ import ProfilePage from "./ProfilePage";
 import TitlePage from "./TitlePage";
 import WatchlistPage from "./WatchlistPage";
 import RegisterPage from "./RegisterPage";
-import LoginPage from "./login";
+import LoginPage from "./LoginPage";
 import {
     BrowserRouter as Router,
     Routes,
