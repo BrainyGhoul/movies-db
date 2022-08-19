@@ -26,10 +26,12 @@ export default class App extends Component {
         this.state = {
             user_info: this.user_info
         }
+        this.user_info();
     }
     
     render() {
-        this.user_info()
+        // getting the user info before the component is rendered
+
         return (
             <Router>
                 { this.state.user_info.is_authenticated ?
@@ -55,12 +57,15 @@ export default class App extends Component {
     user_info = () => {
 
         fetch("/api/user-info")
-        .then(response => 
-            {
-                return response.json();
-            }
-    )}
+        .then(response => response.json())
+        .then(result => {
+
+            this.setState({
+                user_info: result
+            })
+        });
     
+    }
     
 }
 
