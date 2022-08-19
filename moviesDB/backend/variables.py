@@ -2,7 +2,7 @@
 review_title_length = 50
 
 # types of titles. maximum length is 16
-titleTypes = [(0, "Movie"), (1, "TVSeries"), (2, "TVEpisode")]
+titleTypes = [("0", "Movie"), ("1", "TVSeries"), ("2", "TVEpisode")]
 
 # rating values across the whole website
 max_rating = 10
@@ -12,5 +12,5 @@ min_rating = 1
 watchlist_name_length = 32
 
 # user roles. Maxiumum length is 16
-roles = [(0, "actor"), (1, "director"), (2, "writer")]
+roles = [("0", "actor"), ("1", "director"), ("2", "writer")]
 
