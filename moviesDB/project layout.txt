@@ -1,0 +1,18 @@
+the project needss to have profiles(tick)
+it also needs to have a login system with oauth
+it also needs to have a system for reviews.(half tick)
+it also needs to have a way to upload movies
+it also needs to have a system for rating an movie (half tick)
+it also needs to have categories and tags (half tick)
+movies and tv shows need to be different (removed)
+it also needs to have celebrities (actors and other kinds of people like producers) (tick)
+you can create a watch list (half tick)
+needs to have a blogging app(later)
+people can react to a review(later)
+
+
+
+number of html pages
+login page
+home page containing 
+profile page
