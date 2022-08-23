@@ -20,6 +20,7 @@ import {
 } from "react-router-dom";
 import { CTA, Feature, Navbar } from "./components";
 import { Features, Footer, Header, Possibility } from "./containers";
+import "./app.css";
 
 export default class App extends Component {
     constructor(props) {
