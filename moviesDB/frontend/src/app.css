@@ -5,7 +5,48 @@
     scroll-behavior: smooth;
 }
 
-body {
+
+body, .main, .App {
+    height: 100vh;
     margin: 0;
-    background: var(--color-bg)
+    background: var(--color-bg);
+}
+
+.sign {
+    height: 100%;
+}
+
+.centered {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.sign__form-container {
+    border-radius: 5px;
+    box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
+    background-color: white;
+    padding: 20px;
+    border-bottom: 20px;
+}
+
+.sign__form {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sign__text {
+    font-size: 0.8rem;
+}
+.form-group {
+    margin: 6px 0px;
+}
+.sign__logo {
+    width: 3em;
 }

@@ -22,7 +22,6 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     "style-loader",
-                    // MiniCssExctractPlugin.loader,
                     "css-loader",
                 ]
             },
@@ -32,11 +31,7 @@ module.exports = {
         minimize: true,
     },
     plugins: [
-        new MiniCssExctractPlugin({
-            "process.env": {
-                NODE_ENV: JSON.stringify("development"),
-            }
-        }),
+        new MiniCssExctractPlugin(),
         new webpack.DefinePlugin({
             "process.env": {
                 // This has effect on the react lib size 

@@ -5,20 +5,41 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
+from django.middleware.csrf import get_token
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.urls import get_resolver
+from . import urls
 import json
 from . import serializers
 from . import models
 
-# providing user info
-def user_info(request):
-    return JsonResponse({"is_authenticated": request.user.is_authenticated})
+
+
+def endpoints(request):
+    endpoints = []
+    for app_resolver in get_resolver().url_patterns:
+        if app_resolver.app_name == urls.app_name:
+            endpoints = {pattern.name: app_resolver.pattern._route + pattern.pattern._route for pattern in app_resolver.url_patterns}
+            break
+
+    return JsonResponse(endpoints)
+
+
+
+
+
+
+
+
+
+
+
 
 
 # registering users
-class RegisterUser(APIView):
-    serializer_class = serializers.RegisterUser
+class SignUpUser(APIView):
+    serializer_class = serializers.SignUpUser
 
     # when the user submits registration form
     def post(self, request, format=None):
@@ -64,34 +85,30 @@ class RegisterUser(APIView):
 
 
 
-
-# this class handles the login part
-class LoginUser(APIView):
-    serializer_class = serializers.LoginUserByUsername
-
+# # this class handles the login part
+# class SignInUser(APIView):
+#     serializer_class = serializers.SignInUserByUsername
     
-    # logging in the user
-    def post(self, request):
-        # figuring out whether email or username is being used to login
-        data = json.loads(request.body)
-        if "@" in data["username"]:
-            self.serializer_class = serializers.LoginUserByEmail
+#     # logging in the user
+#     def post(self, request):
+#         # figuring out whether email or username is being used to login
+#         if "@" in request.data["username"]:
+#             self.serializer_class = serializers.SignInUserByEmail
         
-        # validating data
-        serializer = self.serializer_class(data=request.POST)
-        if serializer.is_valid():
+#         # validating data
+#         serializer = self.serializer_class(data=request.POST)
+#         print(serializer.is_valid())
+#         if serializer.is_valid():
 
-            # logging in
-            username = serializer.data.get("username")
-            password = serializer.data.get("password")
-
-            user = authenticate(request, username=username, password=password)
-
-            # verifying authentication
-            if user is not None:
-                login(request, user)
-                return HttpResponseRedirect(reverse("home"))
-
-        # if nothing validates, this message is sent
-        return JsonResponse({"message": "Invalid username or password"})
+#             # logging in
+#             username = serializer.data.get("username")
+#             password = serializer.data.get("password")
+#             user = authenticate(request, username=username, password=password)
+#             # verifying authentication
+#             if user is not None:
+#                 login(request, user)
+#                 return HttpResponseRedirect(reverse("home"))
+#         print(serializer.data)
+#         # if nothing validates, this message is sent
+#         return JsonResponse({"message": "Invalid username or password"})
         
