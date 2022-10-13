@@ -22,7 +22,7 @@ import WatchlistPage from "./pages/WatchlistPage";
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 
 
 
@@ -38,8 +38,8 @@ export default class App extends Component {
     render() {
         return (
             <div className="App">
-                <Navbar />
                 <Router>
+                    <Navbar />
                     { window.localStorage.getItem("authorization_token") ?
                         // the user can access these pages if theyre logged in
                         <Routes>

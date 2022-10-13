@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import {
+    Link
+} from "react-router-dom";
 import "bootstrap";
 
 export default class SignInPage extends Component {
@@ -99,7 +102,7 @@ export default class SignInPage extends Component {
                     </div>
 
                     <div className="sign__text">
-                        Don't have an account? <a href="#">Sign Up</a>
+                        Don't have an account? <Link to="/signup">Sign Up</Link>
                     </div>
                 </div>
             </div>
