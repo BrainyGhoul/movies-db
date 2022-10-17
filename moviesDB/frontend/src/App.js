@@ -47,13 +47,16 @@ export default class App extends Component {
                                 <Route path="/profile" element={<ProfilePage />} />
                                 <Route path="/title" element={<TitlePage />} />
                                 <Route path="/watchlist" element={<WatchlistPage />} />
+                                {/* <Route path="*" element={ <PageNotFound /> } /> */}
                                 <Route path="*" element={<Navigate to="/" replace />}/>
                         </Routes> :
                         // user can access these pages if they're no logged in
                         <Routes>
+                            <Route path="/" element={<HomePage />} />
                             <Route path="/signup" element={<SignUpPage />} />
                             <Route path="/signin" element={<SignInPage getState={this.getState} getEndpoints={this.getEndpoints} />} />
-                            <Route path="*" element={ <Navigate to="/signin" replace />} />
+                            <Route path="*" element={ <Navigate to="/" replace /> } />
+                            {/* <Route path="*" element={ <PageNotFound />} /> */}
                         </Routes>
                     }
                 </Router>

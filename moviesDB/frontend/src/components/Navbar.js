@@ -11,7 +11,8 @@ import {
     ListItemText,
     IconButton,
     Button,
-    Divider
+    Divider,
+    TextField
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import "./navbar.css";
@@ -31,6 +32,7 @@ export default class Navbar extends Component {
                     <div className="navbar__logo-wrapper">
                         <img className="navbar__logo" src={window.localStorage.getItem("logo_url")} alt="logo" />
                     </div>
+                    <TextField hiddenLabel fullwidth="true" label="Search" className="navbar__search" variant="filled" size="small" />
 
                         
                         { window.localStorage.getItem("authorization_token") ?
@@ -39,7 +41,7 @@ export default class Navbar extends Component {
                                 <div className="navbar__links-wrapper">
                                     
                                     <Link to="/" className="navbar__link" >
-                                        home
+                                        Home
                                     </Link>
                                     <Link to="/watchlist" className="navbar__link" >
                                         Watchlist
@@ -52,7 +54,10 @@ export default class Navbar extends Component {
                                 </div>
                             </div>:
 
-                            <div className="navbar__sign-buttons">
+                            <div className="navbar__sign-buttons navbar__control">
+                                <Link to="/" className="navbar__link" >
+                                    Home
+                                </Link>
                                 <Link to="/signin" className="navbar__link--simple">
                                     <Button variant="outlined" className="navbar__button">
                                             Sign In

@@ -6,10 +6,13 @@
     align-items: inherit;
 }
 .navbar__logo-wrapper {
-    flex-grow: 1;
-    cursor: pointer;
+    margin-right: 30px;
+    width: auto;
 }
 
+.navbar__search {
+    flex-grow: 1;
+}
 .navbar__logo {
     width: 2em;
 }
@@ -18,7 +21,6 @@
     display: flex;
     margin-left: 10px;
 }
-
 .navbar__link {
     text-decoration: none;
     color: white;
