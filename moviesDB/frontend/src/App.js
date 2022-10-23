@@ -22,6 +22,7 @@ import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer"; 
 
 
 
@@ -63,6 +64,7 @@ export default class App extends Component {
                             {/* <Route path="*" element={ <PageNotFound />} /> */}
                         </Routes>
                     }
+                    <Footer />
                 </Router>
 
             </div>

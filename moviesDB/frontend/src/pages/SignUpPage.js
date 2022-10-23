@@ -73,6 +73,7 @@ export default class SignUpPage extends Component {
                 window.location.assign("/signin");
             } else {
                 // TODO
+                // display the errors
             }
         });
     }

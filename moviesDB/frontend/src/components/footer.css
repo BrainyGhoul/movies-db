@@ -1,0 +1,9 @@
+.footer__box {
+    color: white;
+}
+.footer__container {
+    max-width: 1200px;
+}
+.footer__heading {
+    border-bottom: 1px solid black;
+}
