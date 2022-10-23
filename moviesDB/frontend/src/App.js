@@ -12,7 +12,6 @@ import {
     Navigate
 } from "react-router-dom";
 import "./app.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 import HomePage from "./pages/HomePage";
@@ -29,7 +28,12 @@ import Navbar from "./components/Navbar";
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            api_headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        };
         this.getEndpoints();
         // the purpose is to access the url from any page
         this.saveImageUrlInLocalStorage();
@@ -53,8 +57,8 @@ export default class App extends Component {
                         // user can access these pages if they're no logged in
                         <Routes>
                             <Route path="/" element={<HomePage />} />
-                            <Route path="/signup" element={<SignUpPage />} />
-                            <Route path="/signin" element={<SignInPage getState={this.getState} getEndpoints={this.getEndpoints} />} />
+                            <Route path="/signup" element={<SignUpPage getState={this.getState} />} />
+                            <Route path="/signin" element={<SignInPage getState={this.getState} />} />
                             <Route path="*" element={ <Navigate to="/" replace /> } />
                             {/* <Route path="*" element={ <PageNotFound />} /> */}
                         </Routes>
@@ -65,12 +69,14 @@ export default class App extends Component {
         )
     }
     
+
     saveImageUrlInLocalStorage = () => {
         if (!window.localStorage.getItem("logo_url")) {
             window.localStorage.setItem("logo_url", this.props.logo_url)
         }
     }
 
+    // reduces redundency. You can just get the endpoints from here and other important stuff as well
     getState = () => {
         return this.state
     }

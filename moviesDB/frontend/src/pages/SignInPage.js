@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import {
     Link
 } from "react-router-dom";
+import {
+    TextField,
+    Button
+} from "@material-ui/core";
 import "bootstrap";
 
 export default class SignInPage extends Component {
@@ -9,10 +13,7 @@ export default class SignInPage extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            headers: {
-                'accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+            formData: {}
         }
 
     }
@@ -45,15 +46,11 @@ export default class SignInPage extends Component {
         fetch(app_state["api_endpoints"]["signin"], {
             method: 'POST',
             
-            headers : this.state.headers,
+            headers : app_state.api_headers,
             
-            body: JSON.stringify({
-                username: this.state.username,
-                password: this.state.password
-            })
+            body: JSON.stringify(this.state.formData)
         }).then(response => response.json())
         .then(response_json => {
-            console.log(response_json);
             if (response_json["access"]) {
                 // uploading to localstorage
                 window.localStorage.setItem("authorization_token", "Bearer " + response_json["access"]);
@@ -68,8 +65,10 @@ export default class SignInPage extends Component {
 
     // used for username and password to be easily accessed for sending requests
     updateState = (event) => {
+        var formData = this.state.formData;
+        formData[event.target.name] = event.target.value;
         this.setState({
-            [event.target.name]: event.target.value
+            formData
         });
     }
 
@@ -86,18 +85,11 @@ export default class SignInPage extends Component {
 
                             {/* <input type="hidden" name="csrfmiddlewaretoken" value={this.state.csrf_token} /> */}
 
-                            <div className="form-group">
-                                <input autoFocus className="form-control sign__input" type="text" onChange={this.updateState} value={this.state.username} name="username" placeholder="Username" />
-                            </div>
-
-                            <div className="form-group">
-                                <input className="sign__input form-control" type="password" onChange={this.updateState} value={this.state.password} name="password" placeholder="Password" />
-                                <a className="sign__text" href="#">Forgot Password?</a>
-                            </div>
+                            <TextField autoFocus margin="dense" variant="outlined" size="small" type="text" onChange={this.updateState} name="username" label="Username" />
+                            <TextField autoFocus margin="dense" variant="outlined" size="small" type="password" onChange={this.updateState} name="password" label="password" />
+                            <a className="sign__text" href="#">Forgot Password?</a>
                             
-                            <div className="form-group">
-                                <input className="form-control btn btn-primary" type="submit" value="Login" />
-                            </div>
+                            <Button variant="contained" type="submit">Submit</Button>
                         </form>
                     </div>
 

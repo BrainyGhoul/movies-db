@@ -6,7 +6,7 @@ class SignUpUser(serializers.ModelSerializer):
 
     class Meta:
         model = models.User
-        fields = ("username", "password", "email", "first_name", "last_name", "is_staff", "is_celebrity", "role")
+        fields = ("username", "password", "email", "first_name", "last_name")
 
 
 class SignInUserByEmail(serializers.ModelSerializer):

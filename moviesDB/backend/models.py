@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from . import variables
@@ -5,7 +6,7 @@ from . import variables
 
 class User(AbstractUser):
     is_celebrity = models.BooleanField(default=False)
-    role = models.CharField(max_length=16, choices=variables.roles)
+    role = models.CharField(max_length=16, choices=variables.roles, default="0")
 
 # tags associated with titles. for example thriller, action
 class Tag(models.Model):

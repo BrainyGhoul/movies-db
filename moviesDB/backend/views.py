@@ -1,5 +1,6 @@
 # This file and app is just for backend and data handling
-
+import itertools
+from xml.dom.expatbuilder import InternalSubsetExtractor
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
@@ -13,29 +14,17 @@ from . import urls
 import json
 from . import serializers
 from . import models
+from . import variables
 
 
-
+# providing all the endpoints for the apis available
 def endpoints(request):
     endpoints = []
     for app_resolver in get_resolver().url_patterns:
         if app_resolver.app_name == urls.app_name:
             endpoints = {pattern.name: app_resolver.pattern._route + pattern.pattern._route for pattern in app_resolver.url_patterns}
             break
-
     return JsonResponse(endpoints)
-
-
-
-
-
-
-
-
-
-
-
-
 
 # registering users
 class SignUpUser(APIView):
@@ -45,7 +34,7 @@ class SignUpUser(APIView):
     def post(self, request, format=None):
 
         # validating the data
-        serializer = self.serializer_class(data=request.POST)
+        serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
 
             # making a new user
@@ -54,33 +43,23 @@ class SignUpUser(APIView):
             email = serializer.data.get("email")
             first_name = serializer.data.get("first_name")
             last_name = serializer.data.get("last_name")
-            is_staff = serializer.data.get("is_staff")
-            is_celebrity = serializer.data.get("is_celebrity")
-            role = serializer.data.get("role")
 
-            # entertaining errors
-            try:
-                user = models.User(
-                    username=username, 
-                    password=password, 
-                    email=email,
-                    first_name=first_name,
-                    last_name=last_name,
-                    is_staff=is_staff,
-                    is_celebrity=is_celebrity,
-                    role=role,
-                )
-                user.save()
+            user = models.User.objects.create_user(
+                username=username, 
+                password=password, 
+                email=email,
+                first_name=first_name,
+                last_name=last_name
+            )
+            user.save()
 
-            except IntegrityError:
-                return JsonResponse({"message": "username has already been taken"})
 
-            # logging in the new user
-            login(request, user)
-            return HttpResponseRedirect(reverse("home"))
-
+            return JsonResponse({"message": "You have successfully created an account"})
+        
+        errors = list(itertools.chain(*[[i.title() for i in v][:] for k, v in serializer.errors.items()]))
+        
         # if anything fails, the error message is provided
-        return JsonResponse({"message": "The information provided is invalid"})
+        return JsonResponse({"Error": errors})
 
 
 

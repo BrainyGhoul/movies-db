@@ -30,7 +30,9 @@ export default class Navbar extends Component {
                 <CssBaseline />
                 <Toolbar>
                     <div className="navbar__logo-wrapper">
-                        <img className="navbar__logo" src={window.localStorage.getItem("logo_url")} alt="logo" />
+                        <Link to="/">
+                            <img className="navbar__logo" src={window.localStorage.getItem("logo_url")} alt="logo" />
+                        </Link>
                     </div>
                     <TextField hiddenLabel fullwidth="true" label="Search" className="navbar__search" variant="filled" size="small" />
 

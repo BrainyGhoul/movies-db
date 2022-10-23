@@ -12,5 +12,5 @@ min_rating = 1
 watchlist_name_length = 32
 
 # user roles. Maxiumum length is 16
-roles = [("0", "actor"), ("1", "director"), ("2", "writer")]
+roles = [("0", "User"), ("1", "actor"), ("2", "director"), ("3", "writer")]
 
