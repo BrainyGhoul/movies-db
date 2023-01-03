@@ -22,8 +22,9 @@ export default class Footer extends Component {
                 <Box
                     px={{ xs: 3, sm: 10 }}
                     py={{ sx: 5, sm: 10 }} 
-                    bgcolor="text.secondary"
                     className="footer__box"
+                    color="white"
+                    bgcolor="primary.main"
                 >
                     <Container className="footer__container">
                         <Grid container spacing={5} className="footer__grid">
