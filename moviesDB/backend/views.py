@@ -1,20 +1,13 @@
 # This file and app is just for backend and data handling
 import itertools
-from xml.dom.expatbuilder import InternalSubsetExtractor
-from django.db import IntegrityError
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, JsonResponse
-from django.urls import reverse
-from django.middleware.csrf import get_token
+import datetime
+from django.http import JsonResponse
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from django.urls import get_resolver
+from rest_framework import generics
 from . import urls
-import json
 from . import serializers
 from . import models
-from . import variables
 
 
 # providing all the endpoints for the apis available
@@ -28,7 +21,7 @@ def endpoints(request):
 
 # registering users
 class SignUpUser(APIView):
-    serializer_class = serializers.SignUpUser
+    serializer_class = serializers.SignUpUserSerializer
 
     # when the user submits registration form
     def post(self, request, format=None):
@@ -62,6 +55,31 @@ class SignUpUser(APIView):
         return JsonResponse({"Error": errors})
 
 
+
+# HAVENT TESTED YET
+# returning titles for different types of carouselss
+class DisplayTitles(generics.ListCreateAPIView):
+
+    model = models.Title
+    serializer_class = serializers.TitleSerializer
+
+    def get_queryset(self):
+        
+        queryset = models.Title.objects.all()
+        # filter the titles
+        for parameter, value in self.request.query_params.items():
+            if value:
+                try:
+                    temp = queryset.filter(parameter=value)
+                except:
+                    continue
+            queryset = temp
+        
+        # filtering for upcoming
+        if self.request.query_params.get("upcoming"):
+            queryset = queryset.filter(release_date__gt=datetime.date.today())
+        
+        return queryset
 
 
 # # this class handles the login part

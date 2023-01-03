@@ -15,6 +15,7 @@ class Tag(models.Model):
 # movies, tv shows and episodes are here
 class Title(models.Model):
     title = models.CharField(max_length=255)
+    cover = models.ImageField(upload_to="title_covers/", default="/static/images/dfault.png")
     description = models.TextField()
     release_date = models.DateField()
     region = models.CharField(max_length=64)
@@ -26,6 +27,7 @@ class Title(models.Model):
     writers = models.ManyToManyField(User, related_name="titles_written")
     directors = models.ManyToManyField(User, related_name="titles_directed")
     stars = models.ManyToManyField(User, related_name="title_starred")
+    is_popular = models.BooleanField(default=False)
 
 # the reviews posted by users on movies
 class Review(models.Model):
