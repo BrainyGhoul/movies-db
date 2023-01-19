@@ -37,41 +37,41 @@ export default class Navbar extends Component {
                     <TextField hiddenLabel fullwidth="true" label="Search" className="navbar__search" variant="filled" size="small" />
 
                         
-                        { window.localStorage.getItem("authorization_token") ?
-                            <div className="navbar__control">
-                                <DrawerComponent className="drawer" signout_function={this.signout}/> 
-                                <div className="navbar__links-wrapper">
-                                    
-                                    <Link to="/" className="navbar__link" >
-                                        Home
-                                    </Link>
-                                    <Link to="/watchlist" className="navbar__link" >
-                                        Watchlist
-                                    </Link>
-                                    <div className="navbar__sign-buttons">
-                                        <Button variant="text" onClick={this.signout} className="navbar__button">
-                                            Sign Out
-                                        </Button>
-                                    </div> 
-                                </div>
-                            </div>:
+                        <div className="navbar__control">
 
-                            <div className="navbar__sign-buttons navbar__control">
+                            <DrawerComponent className="drawer" signout_function={this.signout}/> 
+                            <div className="navbar__links-wrapper">
                                 <Link to="/" className="navbar__link" >
                                     Home
                                 </Link>
-                                <Link to="/signin" className="navbar__link--simple">
-                                    <Button variant="outlined" className="navbar__button">
-                                            Sign In
-                                    </Button>
-                                </Link>
-                                <Link to="/signup" className="navbar__link--simple">
-                                    <Button variant="contained" className="navbar__button">
-                                            Sign Up
-                                    </Button>
-                                </Link>
+                                { window.localStorage.getItem("authorization_token") ?
+                                        <>
+                                        <Link to="/watchlist" className="navbar__link" >
+                                            Watchlist
+                                        </Link>
+                                        <div className="navbar__sign-buttons">
+                                            <Button variant="text" onClick={this.signout} className="navbar__button">
+                                                Sign Out
+                                            </Button>
+                                        </div>
+                                        </>:
+
+
+                                    <div className="navbar__sign-buttons">
+                                        <Link to="/signin" className="navbar__link--simple">
+                                            <Button variant="outlined" className="navbar__button">
+                                                    Sign In
+                                            </Button>
+                                        </Link>
+                                        <Link to="/signup" className="navbar__link--simple">
+                                            <Button variant="contained" className="navbar__button">
+                                                    Sign Up
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                }
                             </div>
-                        }
+                        </div>
                 </Toolbar>
             </AppBar>
         )
@@ -124,17 +124,47 @@ class DrawerComponent extends Component {
                             </ListItemText>
                         </ListItem>
                     </List>
-                    <div className="drawer__logout">
-                        <List>
-                            <Divider />
-                            <ListItem className="drawer__logout--center">
-                                <ListItemText>
-                                    <Button onClick={this.props.signout_function} className="navbar__button navbar__button--center" variant="outlined">
-                                        Logout
-                                    </Button>
-                                </ListItemText>
-                            </ListItem>
-                        </List>
+                    <div className="drawer__sign">
+                    { window.localStorage.getItem("authorization_token") ?
+                        <>
+                            <List>
+                                <Divider />
+                                <ListItem className="drawer__sign--center">
+                                    <ListItemText>
+                                        <Button onClick={this.props.signout_function} className="navbar__button navbar__button--center" variant="outlined">
+                                            Logout
+                                        </Button>
+                                    </ListItemText>
+                                </ListItem>
+                            </List>
+                        </>:
+                        <>
+                            <List>
+                                <Divider />
+                                <ListItem className="drawer__sign--center">
+                                    <ListItemText>
+                                        <Link to="/signin">
+                                            <Button className="navbar__button navbar__button--center" variant="outlined">
+                                                Login
+                                            </Button>
+                                        </Link>
+                                    </ListItemText>
+                                </ListItem>
+                            </List>
+                            <List>
+                                <Divider />
+                                <ListItem className="drawer__sign--center">
+                                    <ListItemText>
+                                        <Link to="/signup">
+                                            <Button className="navbar__button navbar__button--center" variant="outlined">
+                                                Sign Up
+                                            </Button>
+                                        </Link>
+                                    </ListItemText>
+                                </ListItem>
+                            </List>
+                        </>
+                    }
                     </div>
                 </Drawer>
                 <IconButton onClick={this.toggle_drawer}>

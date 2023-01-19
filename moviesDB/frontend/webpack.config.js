@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const MiniCssExctractPlugin = require("mini-css-extract-plugin");
+// const { SourceMapDevToolPlugin } = require("webpack");
 
 module.exports = {
     entry: "./src/index.js",
@@ -10,6 +11,11 @@ module.exports = {
     },
     module: {
         rules:[
+            // {
+            //     test: /\.js$/,
+            //     enforce: 'pre',
+            //     use: ['source-map-loader'],
+            // },
             {
                 test: /\.js$|jsx/,
                 exclude: /node_modules/,
@@ -39,5 +45,8 @@ module.exports = {
                 NODE_ENV: JSON.stringify("development"),
             },
         }),
+        // new SourceMapDevToolPlugin({
+        //     filename: "[file].map"
+        // }),
     ],
 }

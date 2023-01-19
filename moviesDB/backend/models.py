@@ -7,15 +7,20 @@ from . import variables
 class User(AbstractUser):
     is_celebrity = models.BooleanField(default=False)
     role = models.CharField(max_length=16, choices=variables.roles, default="0")
+    
 
 # tags associated with titles. for example thriller, action
 class Tag(models.Model):
     name = models.CharField(max_length=16)
 
+    def __str__(self):
+        return self.name
+
 # movies, tv shows and episodes are here
 class Title(models.Model):
     title = models.CharField(max_length=255)
-    cover = models.ImageField(upload_to="title_covers/", default="/static/images/dfault.png")
+    cover = models.ImageField(upload_to="title_covers/", default="/title_covers/default.png")
+    banner = models.ImageField(upload_to="title_banners/", default="/title_banners/default.jpeg", blank=True, null=True)
     description = models.TextField()
     release_date = models.DateField()
     region = models.CharField(max_length=64)
@@ -23,11 +28,15 @@ class Title(models.Model):
     titleType = models.CharField(max_length=16, choices=variables.titleTypes)
     length = models.DurationField()
     rating = models.IntegerField()
-    tags = models.ManyToManyField(Tag, related_name="title")
+    tags = models.ManyToManyField(Tag, related_name="title", blank=True)
     writers = models.ManyToManyField(User, related_name="titles_written")
     directors = models.ManyToManyField(User, related_name="titles_directed")
     stars = models.ManyToManyField(User, related_name="title_starred")
-    is_popular = models.BooleanField(default=False)
+    popular = models.BooleanField(default=False)
+    
+
+    def __str__(self):
+        return self.title
 
 # the reviews posted by users on movies
 class Review(models.Model):
@@ -38,8 +47,14 @@ class Review(models.Model):
     rating = models.IntegerField()
     likes = models.ManyToManyField(User, related_name="liked_review")
 
+    def __str__(self):
+        return self.author.username + ": " + self.movie.title
+
 # the watchlists created by users
 class Watchlist(models.Model):
     name = models.CharField(max_length=variables.watchlist_name_length)
     title = models.ManyToManyField(Title, related_name="watchlist")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlist")
+
+    def __str__(self):
+        return self.user.username

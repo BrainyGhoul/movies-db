@@ -24,7 +24,7 @@ export default class SignUpPage extends Component {
         return (
             <div className="sign signup">
                 {/* centered div  */}
-                <div className="centered">
+                <div className="centered centered--vertial">
 
                     <img className="sign__logo" src={window.localStorage.getItem("logo_url")} alt="logo" />
                     <div className="sign__form-container">
@@ -62,10 +62,9 @@ export default class SignUpPage extends Component {
 
     createAccount = (event) => {
         event.preventDefault();
-        const app_state = this.props.getState();
-        fetch(app_state["api_endpoints"]["signup"], {
+        fetch(JSON.parse(window.localStorage.getItem("api_endpoints"))["signup"], {
             method: "POST",
-            headers: app_state.api_headers,
+            headers: JSON.parse(window.localStorage.getItem("api_headers").json()),
             body: JSON.stringify(this.state.formData)
         }).then(response => response.json())
         .then(response_json => {

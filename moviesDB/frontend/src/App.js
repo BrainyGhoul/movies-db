@@ -43,30 +43,32 @@ export default class App extends Component {
     render() {
         return (
             <div className="App">
-                <Router>
-                    <Navbar />
-                    { window.localStorage.getItem("authorization_token") ?
-                        // the user can access these pages if theyre logged in
-                        <Routes>
+                {window.localStorage.getItem("api_endpoints")?
+                
+                    <Router>
+                        <Navbar />
+                        { window.localStorage.getItem("authorization_token") ?
+                            // the user can access these pages if theyre logged in
+                            <Routes>
+                                    <Route path="/" element={<HomePage />} />
+                                    <Route path="/profile" element={<ProfilePage />} />
+                                    <Route path="/title" element={<TitlePage />} />
+                                    <Route path="/watchlist" element={<WatchlistPage />} />
+                                    {/* <Route path="*" element={ <PageNotFound /> } /> */}
+                                    <Route path="*" element={<Navigate to="/" replace />}/>
+                            </Routes> :
+                            // user can access these pages if they're not logged in
+                            <Routes>
                                 <Route path="/" element={<HomePage />} />
-                                <Route path="/profile" element={<ProfilePage />} />
-                                <Route path="/title" element={<TitlePage />} />
-                                <Route path="/watchlist" element={<WatchlistPage />} />
-                                {/* <Route path="*" element={ <PageNotFound /> } /> */}
-                                <Route path="*" element={<Navigate to="/" replace />}/>
-                        </Routes> :
-                        // user can access these pages if they're no logged in
-                        <Routes>
-                            <Route path="/" element={<HomePage />} />
-                            <Route path="/signup" element={<SignUpPage getState={this.getState} />} />
-                            <Route path="/signin" element={<SignInPage getState={this.getState} />} />
-                            <Route path="*" element={ <Navigate to="/" replace /> } />
-                            {/* <Route path="*" element={ <PageNotFound />} /> */}
-                        </Routes>
-                    }
-                    <Footer />
-                </Router>
-
+                                <Route path="/signup" element={<SignUpPage />} />
+                                <Route path="/signin" element={<SignInPage />} />
+                                <Route path="*" element={ <Navigate to="/" replace /> } />
+                                {/* <Route path="*" element={ <PageNotFound />} /> */}
+                            </Routes>
+                        }
+                        <Footer />
+                    </Router>: null
+                }
             </div>
         )
     }
@@ -78,19 +80,13 @@ export default class App extends Component {
         }
     }
 
-    // reduces redundency. You can just get the endpoints from here and other important stuff as well
-    getState = () => {
-        return this.state
-    }
-
     // getting all the endpoints the backend api offers
     getEndpoints = () => {
         fetch("/api/endpoints/")
         .then(response => response.json())
         .then(response => {
-            this.setState({
-                api_endpoints: response
-            });
+            window.localStorage.setItem("api_endpoints", JSON.stringify(response));
+            window.localStorage.setItem("api_headers", JSON.stringify(this.state.api_headers));
         });
     }
 }

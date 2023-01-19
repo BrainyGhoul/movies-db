@@ -47,14 +47,14 @@
     font-size: 1em;
     font-weight: bold;
 }
-.drawer__logout {
+.drawer__sign {
     position: fixed;
     margin-top: auto;
     padding-bottom: 0;
     width: 100%;
     bottom: 0;
 }
-.drawer__logout--center {
+.drawer__sign--center {
     display: flex;
     justify-content: center;
 }

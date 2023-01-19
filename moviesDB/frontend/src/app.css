@@ -7,24 +7,28 @@
 
 
 body, .main, .App {
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     margin: 0;
     background: var(--color-bg);
 }
 
 .sign {
-    height: 100%;
+    height: 90vh;
 }
 
 .centered {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
     padding: 10px;
-    margin: 0;
-    justify-content: center;
     align-items: center;
-    gap: 20px;
+    /* gap: 20px; */
+    /* margin: auto; */
+}
+
+.centered--vertial {
+    justify-content: center;
 }
 
 
@@ -48,4 +52,14 @@ body, .main, .App {
 
 .sign__logo {
     width: 3em;
+}
+.home {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.home > div {
+    margin-bottom: 5vh;
 }

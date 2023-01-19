@@ -1,0 +1,59 @@
+.carousel {
+    height: 40vx;
+}
+.carousel, .carousel__item {
+    height: 100%;
+    width: 100%;
+    max-height: 100%;
+}
+.carousel__item {
+    position: relative;
+}
+.item__banner {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 50%, transparent 100%);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 50%, transparent 100%);
+    width: 100%;
+    height: 100%;
+}
+.item__banner > img {
+    width: 100%;
+}
+.carousel__info {
+    position: absolute;
+    bottom: -10%;
+    display: flex;
+    height: 40%;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+}
+.carousel__item-description {
+    height: 2rem;
+    line-height: 1rem;
+    /* font-size: auto; */
+    /* margin: 2em; */
+    font-size: 1rem;
+    /* margin-bottom: 10%; */
+    /* font-size: 1em; */
+    overflow: hidden;
+}
+
+.info_content{
+    width: 80%;
+}
+
+
+.info_img{
+    width: 20%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.info_img img { 
+    width: 80%;
+}

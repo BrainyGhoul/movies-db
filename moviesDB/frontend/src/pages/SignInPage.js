@@ -41,12 +41,11 @@ export default class SignInPage extends Component {
 
     getAccessToken = (event) => {
         event.preventDefault();
-        const app_state = this.props.getState();
         // authenticating user
-        fetch(app_state["api_endpoints"]["signin"], {
+        fetch(JSON.parse(window.localStorage.getItem("api_endpoints"))["signin"], {
             method: 'POST',
             
-            headers : app_state.api_headers,
+            headers : JSON.parse(window.localStorage.getItem("api_headers")),
             
             body: JSON.stringify(this.state.formData)
         }).then(response => response.json())
@@ -77,7 +76,7 @@ export default class SignInPage extends Component {
         return (
             <div className="sign">
                 {/* centered div  */}
-                <div className="centered">
+                <div className="centered centered--vertial">
 
                     <img className="sign__logo" src={window.localStorage.getItem("logo_url")} alt="logo" />
                     <div className="sign__form-container">

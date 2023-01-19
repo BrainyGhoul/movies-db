@@ -29,7 +29,7 @@ class TitleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Title
-        fields = ("title", "cover", "description", "release_date", "region", "language", "titleType", "length", "rating", "tags", "writers", "directors", "stars")
+        fields = ("title", "cover", "description", "release_date", "region", "language", "titleType", "length", "rating", "tags", "writers", "directors", "stars", "banner")
 
 
 # class SignInUserByEmail(serializers.ModelSerializer):
