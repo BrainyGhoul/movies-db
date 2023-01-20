@@ -85,7 +85,7 @@ export default class SignInPage extends Component {
                             {/* <input type="hidden" name="csrfmiddlewaretoken" value={this.state.csrf_token} /> */}
 
                             <TextField autoFocus margin="dense" variant="outlined" size="small" type="text" onChange={this.updateState} name="username" label="Username" />
-                            <TextField autoFocus margin="dense" variant="outlined" size="small" type="password" onChange={this.updateState} name="password" label="password" />
+                            <TextField margin="dense" variant="outlined" size="small" type="password" onChange={this.updateState} name="password" label="password" />
                             <a className="sign__text" href="#">Forgot Password?</a>
                             
                             <Button variant="contained" type="submit">Submit</Button>

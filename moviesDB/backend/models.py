@@ -1,6 +1,8 @@
 from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator
+from decimal import Decimal
 from . import variables
 
 
@@ -27,7 +29,7 @@ class Title(models.Model):
     language = models.CharField(max_length=32)
     titleType = models.CharField(max_length=16, choices=variables.titleTypes)
     length = models.DurationField()
-    rating = models.IntegerField()
+    rating = models.DecimalField(decimal_places=1, max_digits=2,validators=[MinValueValidator(Decimal("1.0"))])
     tags = models.ManyToManyField(Tag, related_name="title", blank=True)
     writers = models.ManyToManyField(User, related_name="titles_written")
     directors = models.ManyToManyField(User, related_name="titles_directed")

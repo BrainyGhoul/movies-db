@@ -2,7 +2,7 @@
 review_title_length = 50
 
 # types of titles. maximum length is 16
-titleTypes = [("0", "Movie"), ("1", "TVSeries"), ("2", "TVEpisode")]
+titleTypes = [("M", "Movie"), ("TV", "TVSeries"), ("EP", "TVEpisode")]
 
 # rating values across the whole website
 max_rating = 10

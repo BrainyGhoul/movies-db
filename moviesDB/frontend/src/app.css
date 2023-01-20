@@ -63,3 +63,6 @@ body, .main, .App {
 .home > div {
     margin-bottom: 5vh;
 }
+.component__title {
+    margin: 10px;
+}

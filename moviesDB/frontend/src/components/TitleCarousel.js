@@ -36,6 +36,7 @@ export default class TitleCarousel extends Component {
             this.setState({
                 titles: response
             });
+            console.log(response);
         });
     }
 }
