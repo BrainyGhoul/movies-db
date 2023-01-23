@@ -9,6 +9,7 @@ import {
     Checkbox,
     FormControlLabel
 } from "@material-ui/core";
+import api from "../axios";
 
 
 export default class SignUpPage extends Component {
@@ -62,14 +63,12 @@ export default class SignUpPage extends Component {
 
     createAccount = (event) => {
         event.preventDefault();
-        fetch(JSON.parse(window.localStorage.getItem("api_endpoints"))["signup"], {
-            method: "POST",
-            headers: JSON.parse(window.localStorage.getItem("api_headers").json()),
+        api.post(JSON.parse(window.localStorage.getItem("api_endpoints"))["signup"], {
             body: JSON.stringify(this.state.formData)
         }).then(response => response.json())
         .then(response_json => {
             if (response_json["message"]) {
-                window.location.assign("/signin");
+                window.location.assign(JSON.parse(window.localStorage.getItem("api_endpoints"))["signin"]);
             } else {
                 // TODO
                 // display the errors

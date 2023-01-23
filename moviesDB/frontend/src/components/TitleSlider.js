@@ -3,14 +3,39 @@ import "./titleslider.css";
 import StarRateIcon from "@material-ui/icons/Star";
 import { Button } from "@material-ui/core";
 import BookmarkAdd from "@material-ui/icons/Bookmark";
+import api from "../axios";
+
+export class TitleSliderApi extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {data: false};
+        this.slider_data();
+    }
+
+    render() {
+        if (this.state.data) {
+            return (<TitleSlider titles={this.state.data} name={this.props.name} />);
+        }
+        return (<></>);
+    }
+
+    slider_data = () => {
+        api.get(JSON.parse(window.localStorage.getItem("api_endpoints"))["titles"] + `?${this.props.stringQueryParameters}`.trim("?="))
+        .then(response => {
+            this.setState({
+                data: response.data
+            });
+        });        
+    }
+
+}
 
 export default class TitleSlider extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            titles: []
+            titles: this.props.titles
         };
-        this.get_data();
     }
 
     render() {
@@ -35,51 +60,51 @@ export default class TitleSlider extends Component {
         const parent = event.currentTarget.parentNode.parentElement.lastChild;
         parent.scrollLeft = parent.scrollLeft + parent.clientWidth;
     }
-    
-    get_data = () => {
-        var name = ""
-        if (this.props.name) {
-            name = this.props.name.toLowerCase();
-        }
-        fetch(JSON.parse(window.localStorage.getItem("api_endpoints"))["titles"] + `?${this.props.stringQueryParameters}`.trim("?="))
-        .then(response => response.json())
-        .then(response => {
-            this.setState({
-                titles: response
-            });
-        });
-    }
 }
 
 class SliderItem extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            title: this.props.title
+        }
     }
 
     render() {
         return (
             <div className="slider__item">
                 <div className="slider__photo">
-                <img className="" src={this.props.title.cover} alt={this.props.title.title + " cover"}/>
+                <img className="" src={this.state.title.cover} alt={this.state.title.title + " cover"}/>
                 </div>
                 <div className="slider__info" >
                     <div className="slider__rating">
                         <StarRateIcon />
                         <span>
-                        {this.props.title.rating}
+                        {this.state.title.rating}
                         </span>
                     </div>
                     <div className="slider__title" >
-                        <a href="#TODO">{this.props.title.title}</a>
+                        <a href="#TODO">{this.state.title.title}</a>
                     </div>
+                    { window.localStorage.getItem("access_token") ?
                     <div className="slider__watchlist-button">
                         <Button onClick="#TODO">WatchList</Button>
-                    </div>
+                    </div>:<></>
+                    }
                 </div>
-                <div >
-                    <BookmarkAdd  className="slider__bookmark-flag"/>
-                </div>
+                { window.localStorage.getItem("access_token") ?
+                <BookmarkAdd  className="slider__bookmark-flag"/>:
+                <></>
+                }
             </div>
         )
     }
+
+    // watchlist = (event) => {
+    //     var title = this.state.title;
+    //     title[""]
+    //     this.setState({
+    //         title: 
+    //     })
+    // }
 }

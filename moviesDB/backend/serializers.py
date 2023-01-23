@@ -32,6 +32,15 @@ class TitleSerializer(serializers.ModelSerializer):
         fields = ("title", "cover", "description", "release_date", "region", "language", "titleType", "length", "rating", "tags", "writers", "directors", "stars", "banner")
 
 
+class WatchlistSerializer(serializers.ModelSerializer):
+
+    titles = TitleSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = models.Watchlist
+        fields = ("name", "titles")
+
+
 # class SignInUserByEmail(serializers.ModelSerializer):
 
 #     class Meta:

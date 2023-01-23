@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from django.urls import get_resolver
 from rest_framework import generics
 from django.core.paginator import Paginator
+from rest_framework.permissions import IsAuthenticated
 from . import urls
 from . import serializers
 from . import models
@@ -104,6 +105,15 @@ class DisplayTitles(generics.ListCreateAPIView):
         queryset = Paginator (queryset, variables.titles_per_page).get_page(page)
         return queryset
 
+
+class getWatchlists(generics.ListAPIView):
+    model = models.Watchlist
+    serializer_class = serializers.WatchlistSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        queryset = self.request.user.watchlists.all().order_by("id")
+        return queryset
 
 # # this class handles the login part
 # class SignInUser(APIView):

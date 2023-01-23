@@ -55,8 +55,8 @@ class Review(models.Model):
 # the watchlists created by users
 class Watchlist(models.Model):
     name = models.CharField(max_length=variables.watchlist_name_length)
-    title = models.ManyToManyField(Title, related_name="watchlist")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlist")
+    titles = models.ManyToManyField(Title, related_name="watchlist")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlists")
 
     def __str__(self):
         return self.user.username

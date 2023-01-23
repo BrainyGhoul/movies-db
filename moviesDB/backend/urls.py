@@ -10,6 +10,9 @@ urlpatterns = [
     path('signin/', TokenObtainPairView.as_view(), name='signin'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path("signup/", views.SignUpUser.as_view(), name="signup"),
+    path("titles/", views.DisplayTitles.as_view(), name="titles"),
+    path("watchlists/", views.getWatchlists.as_view(), name="watchlists"),
+    # path("watchlists/", views.getWatchlists, name="watchlists"),
     path("endpoints/", views.endpoints, name="endpoints"),
-    path("titles/", views.DisplayTitles.as_view(), name="titles")
+
 ]

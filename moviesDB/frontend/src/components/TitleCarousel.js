@@ -1,6 +1,7 @@
 import Carousel from 'react-material-ui-carousel';
 import React, { Component } from "react";
 import "./titlecarousel.css";
+import api from "../axios";
 
 
 export default class TitleCarousel extends Component {
@@ -30,13 +31,11 @@ export default class TitleCarousel extends Component {
         if (this.props.name) {
             name = this.props.name.toLowerCase()
         }
-        fetch(JSON.parse(window.localStorage.getItem("api_endpoints"))["titles"] + `?${name}=${true}`.trim("?="))
-        .then(response => response.json())
+        api.get(JSON.parse(window.localStorage.getItem("api_endpoints"))["titles"] + `?${name}=${true}`.trim("?="))
         .then(response => {
             this.setState({
-                titles: response
+                titles: response.data
             });
-            console.log(response);
         });
     }
 }

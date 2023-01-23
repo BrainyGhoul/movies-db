@@ -11,6 +11,7 @@ import {
     Redirect,
     Navigate
 } from "react-router-dom";
+import api from "./axios";
 import "./app.css";
 
 
@@ -29,12 +30,7 @@ import Footer from "./components/Footer";
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            api_headers: {
-                'accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        };
+        this.state = {};
         this.getEndpoints();
         // the purpose is to access the url from any page
         this.saveImageUrlInLocalStorage();
@@ -43,17 +39,18 @@ export default class App extends Component {
     render() {
         return (
             <div className="App">
+                
                 {window.localStorage.getItem("api_endpoints")?
                 
                     <Router>
                         <Navbar />
-                        { window.localStorage.getItem("authorization_token") ?
+                        { window.localStorage.getItem("access_token") ?
                             // the user can access these pages if theyre logged in
                             <Routes>
                                     <Route path="/" element={<HomePage />} />
                                     <Route path="/profile" element={<ProfilePage />} />
                                     <Route path="/title" element={<TitlePage />} />
-                                    <Route path="/watchlist" element={<WatchlistPage />} />
+                                    <Route path="/watchlists" element={<WatchlistPage />} />
                                     {/* <Route path="*" element={ <PageNotFound /> } /> */}
                                     <Route path="*" element={<Navigate to="/" replace />}/>
                             </Routes> :
@@ -69,6 +66,7 @@ export default class App extends Component {
                         <Footer />
                     </Router>: null
                 }
+                
             </div>
         )
     }
@@ -82,11 +80,9 @@ export default class App extends Component {
 
     // getting all the endpoints the backend api offers
     getEndpoints = () => {
-        fetch("/api/endpoints/")
-        .then(response => response.json())
+        api.get("/api/endpoints/")
         .then(response => {
-            window.localStorage.setItem("api_endpoints", JSON.stringify(response));
-            window.localStorage.setItem("api_headers", JSON.stringify(this.state.api_headers));
+            window.localStorage.setItem("api_endpoints", JSON.stringify(response.data));
         });
     }
 }

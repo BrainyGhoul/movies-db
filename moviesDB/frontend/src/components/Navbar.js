@@ -15,6 +15,7 @@ import {
     TextField
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
+import api from "../axios";
 import "./navbar.css";
 
 
@@ -44,17 +45,17 @@ export default class Navbar extends Component {
                                 <Link to="/" className="navbar__link" >
                                     Home
                                 </Link>
-                                { window.localStorage.getItem("authorization_token") ?
-                                        <>
-                                        <Link to="/watchlist" className="navbar__link" >
-                                            Watchlist
-                                        </Link>
-                                        <div className="navbar__sign-buttons">
-                                            <Button variant="text" onClick={this.signout} className="navbar__button">
-                                                Sign Out
-                                            </Button>
-                                        </div>
-                                        </>:
+                                { window.localStorage.getItem("access_token") ?
+                                    <>
+                                    <Link to="/watchlists" className="navbar__link" >
+                                        Watchlists
+                                    </Link>
+                                    <div className="navbar__sign-buttons">
+                                        <Button variant="text" onClick={this.signout} className="navbar__button">
+                                            Sign Out
+                                        </Button>
+                                    </div>
+                                    </>:
 
 
                                     <div className="navbar__sign-buttons">
@@ -78,7 +79,7 @@ export default class Navbar extends Component {
     }
 
     signout = () => {
-        window.localStorage.removeItem("authorization_token");
+        window.localStorage.removeItem("refresh_token");
         window.localStorage.removeItem("access_token");
         location.reload();
     }
@@ -120,12 +121,12 @@ class DrawerComponent extends Component {
                         </ListItem>
                         <ListItem onClick={this.close_drawer}>
                             <ListItemText>
-                                <Link to="/watchlist">watchlist</Link>
+                                <Link to="/watchlists">watchlists</Link>
                             </ListItemText>
                         </ListItem>
                     </List>
                     <div className="drawer__sign">
-                    { window.localStorage.getItem("authorization_token") ?
+                    { window.localStorage.getItem("access_token") ?
                         <>
                             <List>
                                 <Divider />

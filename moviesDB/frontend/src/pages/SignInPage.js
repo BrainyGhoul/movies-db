@@ -7,6 +7,7 @@ import {
     Button
 } from "@material-ui/core";
 import "bootstrap";
+import api from "../axios";
 
 export default class SignInPage extends Component {
 
@@ -42,24 +43,22 @@ export default class SignInPage extends Component {
     getAccessToken = (event) => {
         event.preventDefault();
         // authenticating user
-        fetch(JSON.parse(window.localStorage.getItem("api_endpoints"))["signin"], {
-            method: 'POST',
-            
-            headers : JSON.parse(window.localStorage.getItem("api_headers")),
-            
-            body: JSON.stringify(this.state.formData)
-        }).then(response => response.json())
-        .then(response_json => {
-            if (response_json["access"]) {
-                // uploading to localstorage
-                window.localStorage.setItem("authorization_token", "Bearer " + response_json["access"]);
-                window.localStorage.setItem("refresh_token", response_json["refresh"]);
+        api.post(JSON.parse(window.localStorage.getItem("api_endpoints"))["signin"], this.state.formData)
+        .then(response => {
+            response = response.data;
+            if (response["access"]) {
+
+                window.localStorage.setItem("access_token", response["access"]);
+                window.localStorage.setItem("refresh_token", response["refresh"]);
             } else {
                 // TODO
             }
             // reloading to go to the homepage
             window.location.reload();
+        }).catch(error => {
+            console.log(error);
         });
+
     }
 
     // used for username and password to be easily accessed for sending requests

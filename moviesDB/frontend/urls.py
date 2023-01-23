@@ -10,6 +10,6 @@ urlpatterns = [
     path("signup", views.index, name="signup"),
     path("profile", views.index, name="profile"),
     path("title", views.index, name="title"),
-    path("watchlist", views.index, name="watchlist"),
+    path("watchlists", views.index, name="watchlist"),
     path("signin", views.index, name="signin"),
 ]
