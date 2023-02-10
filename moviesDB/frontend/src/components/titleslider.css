@@ -30,8 +30,6 @@
 .slider__items {
     display: flex;
     overflow-x: hidden;
-    /* max-width: auto; */
-    /* width: 100%; */
 }
 .slider__item {
     height: 100%;
@@ -64,6 +62,14 @@
 .slider__title > a {
     text-decoration: none;
     color: black;
+}
+.slider__title-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100px;
+    line-height: 1em;
+    height: 2em;
+    margin: auto;
 }
 .slider__item > a:hover {
     text-decoration: underline;

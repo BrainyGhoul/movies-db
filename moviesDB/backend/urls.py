@@ -12,7 +12,7 @@ urlpatterns = [
     path("signup/", views.SignUpUser.as_view(), name="signup"),
     path("titles/", views.DisplayTitles.as_view(), name="titles"),
     path("watchlists/", views.getWatchlists.as_view(), name="watchlists"),
-    # path("watchlists/", views.getWatchlists, name="watchlists"),
+    path("profile/<str:username>", views.getProfile.as_view(), name="profile"),
     path("endpoints/", views.endpoints, name="endpoints"),
 
 ]

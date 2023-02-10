@@ -44,25 +44,27 @@ export default class App extends Component {
                 
                     <Router>
                         <Navbar />
-                        { window.localStorage.getItem("access_token") ?
-                            // the user can access these pages if theyre logged in
-                            <Routes>
+                        <div className="page">
+                            { window.localStorage.getItem("access_token") ?
+                                // the user can access these pages if theyre logged in
+                                <Routes>
+                                        <Route path="/" element={<HomePage />} />
+                                        <Route path="/profile/*" element={<ProfilePage />} />
+                                        <Route path="/title" element={<TitlePage />} />
+                                        <Route path="/watchlists" element={<WatchlistPage />} />
+                                        {/* <Route path="*" element={ <PageNotFound /> } /> */}
+                                        <Route path="*" element={<Navigate to="/" replace />}/>
+                                </Routes> :
+                                // user can access these pages if they're not logged in
+                                <Routes>
                                     <Route path="/" element={<HomePage />} />
-                                    <Route path="/profile" element={<ProfilePage />} />
-                                    <Route path="/title" element={<TitlePage />} />
-                                    <Route path="/watchlists" element={<WatchlistPage />} />
-                                    {/* <Route path="*" element={ <PageNotFound /> } /> */}
-                                    <Route path="*" element={<Navigate to="/" replace />}/>
-                            </Routes> :
-                            // user can access these pages if they're not logged in
-                            <Routes>
-                                <Route path="/" element={<HomePage />} />
-                                <Route path="/signup" element={<SignUpPage />} />
-                                <Route path="/signin" element={<SignInPage />} />
-                                <Route path="*" element={ <Navigate to="/" replace /> } />
-                                {/* <Route path="*" element={ <PageNotFound />} /> */}
-                            </Routes>
-                        }
+                                    <Route path="/signup" element={<SignUpPage />} />
+                                    <Route path="/signin" element={<SignInPage />} />
+                                    <Route path="*" element={ <Navigate to="/" replace /> } />
+                                    {/* <Route path="*" element={ <PageNotFound />} /> */}
+                                </Routes>
+                            }
+                        </div>
                         <Footer />
                     </Router>: null
                 }
@@ -82,7 +84,13 @@ export default class App extends Component {
     getEndpoints = () => {
         api.get("/api/endpoints/")
         .then(response => {
-            window.localStorage.setItem("api_endpoints", JSON.stringify(response.data));
+            response = response.data;
+            console.log(response);
+            Object.keys(response).forEach(key => {
+                response[key] = response[key].replace(/<.*>.*/, "");
+            });
+            
+            window.localStorage.setItem("api_endpoints", JSON.stringify(response));
         });
     }
 }

@@ -15,7 +15,7 @@ import {
     TextField
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import api from "../axios";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 import "./navbar.css";
 
 
@@ -27,9 +27,10 @@ export default class Navbar extends Component {
 
     render() {
         return (
-            <AppBar position="static" className="navbar--left navbar">
+            <AppBar position="static" className="navbar__container">
                 <CssBaseline />
                 <Toolbar>
+                <div className="navbar--center navbar">
                     <div className="navbar__logo-wrapper">
                         <Link to="/">
                             <img className="navbar__logo" src={window.localStorage.getItem("logo_url")} alt="logo" />
@@ -37,16 +38,21 @@ export default class Navbar extends Component {
                     </div>
                     <TextField hiddenLabel fullwidth="true" label="Search" className="navbar__search" variant="filled" size="small" />
 
-                        
-                        <div className="navbar__control">
 
-                            <DrawerComponent className="drawer" signout_function={this.signout}/> 
-                            <div className="navbar__links-wrapper">
-                                <Link to="/" className="navbar__link" >
-                                    Home
-                                </Link>
-                                { window.localStorage.getItem("access_token") ?
-                                    <>
+                        
+                    <div className="navbar__control">
+                        <DrawerComponent className="drawer" signout_function={this.signout}/> 
+                        <div className="navbar__links-wrapper">
+                            { window.localStorage.getItem("access_token")?
+                                <Link to="/profile" className="navbar__link">
+                                    <AccountCircle />
+                                </Link>:null
+                            }
+                            <Link to="/" className="navbar__link" >
+                                Home
+                            </Link>
+                            { window.localStorage.getItem("access_token") ?
+                                <>
                                     <Link to="/watchlists" className="navbar__link" >
                                         Watchlists
                                     </Link>
@@ -55,24 +61,25 @@ export default class Navbar extends Component {
                                             Sign Out
                                         </Button>
                                     </div>
-                                    </>:
+                                </>:
 
 
-                                    <div className="navbar__sign-buttons">
-                                        <Link to="/signin" className="navbar__link--simple">
-                                            <Button variant="outlined" className="navbar__button">
-                                                    Sign In
-                                            </Button>
-                                        </Link>
-                                        <Link to="/signup" className="navbar__link--simple">
-                                            <Button variant="contained" className="navbar__button">
-                                                    Sign Up
-                                            </Button>
-                                        </Link>
-                                    </div>
-                                }
-                            </div>
+                                <div className="navbar__sign-buttons">
+                                    <Link to="/signin" className="navbar__link--simple">
+                                        <Button variant="outlined" className="navbar__button">
+                                                Sign In
+                                        </Button>
+                                    </Link>
+                                    <Link to="/signup" className="navbar__link--simple">
+                                        <Button variant="contained" className="navbar__button">
+                                                Sign Up
+                                        </Button>
+                                    </Link>
+                                </div>
+                            }
                         </div>
+                    </div>
+                </div>
                 </Toolbar>
             </AppBar>
         )

@@ -63,12 +63,12 @@ export default class SignUpPage extends Component {
 
     createAccount = (event) => {
         event.preventDefault();
-        api.post(JSON.parse(window.localStorage.getItem("api_endpoints"))["signup"], {
-            body: JSON.stringify(this.state.formData)
-        }).then(response => response.json())
+        api.post(JSON.parse(window.localStorage.getItem("api_endpoints"))["signup"], this.state.formData)
         .then(response_json => {
-            if (response_json["message"]) {
-                window.location.assign(JSON.parse(window.localStorage.getItem("api_endpoints"))["signin"]);
+            console.log(response_json)
+            if (response_json.data["message"]) {
+                window.location.assign("/signin");
+
             } else {
                 // TODO
                 // display the errors

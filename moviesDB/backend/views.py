@@ -142,3 +142,19 @@ class getWatchlists(generics.ListAPIView):
 #         # if nothing validates, this message is sent
 #         return JsonResponse({"message": "Invalid username or password"})
         
+class getProfile(generics.ListAPIView):
+    model = models.User
+    serializer_class = serializers.UserProfileSerializer
+
+    def get_queryset(self):
+
+        username = self.kwargs.get("username")
+        if username == "me" and self.request.user.is_authenticated:
+            object = models.User.objects.filter(id=self.request.user.id)
+        else:
+            try:
+                object = models.User.objects.filter(username=username)
+            except:
+                return JsonResponse({"message": "invalid username"})
+            
+        return object

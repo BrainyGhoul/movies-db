@@ -11,7 +11,7 @@ export default class HomePage extends Component {
     render () {
         return (
             <div className="centered">
-                <div className="home">
+                <div className="page__60percent">
                     <TitleCarousel name="Popular" stringQueryParameters="popular=true"/>
                     <TitleSliderApi name="Popular" stringQueryParameters="popular=true" />
                     <TitleSliderApi name="Upcoming" stringQueryParameters="upcoming=true" />

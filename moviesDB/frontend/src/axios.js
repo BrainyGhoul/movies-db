@@ -27,7 +27,7 @@ api.interceptors.request.use(function (config) {
 api.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    if (error.response.data.code === "token_not_valid" && error.config.url === JSON.parse(window.localStorage.getItem("api_endpoints"))["watchlists"]) {
+    if (error.response.data.code === "token_not_valid" && error.config.url != JSON.parse(window.localStorage.getItem("api_endpoints"))["token_refresh"]) {
         api.post(JSON.parse(window.localStorage.getItem("api_endpoints"))["token_refresh"], {
             "refresh": window.localStorage.getItem("refresh_token")
         }).then(response => {
@@ -35,9 +35,12 @@ api.interceptors.response.use(function (response) {
                 window.localStorage.setItem("access_token", response.data.access);
                 var request = error.config;
                 request._retry = true;
-                return api(request);
+                return api.request(request);
             }
         });
+    } else if (error.config.url === JSON.parse(window.localStorage.getItem("api_endpoints"))["token_refresh"]) {
+        window.localStorage.removeItem("access_token");
+        window.location.reload();
     }
     return Promise.reject(error);
   });

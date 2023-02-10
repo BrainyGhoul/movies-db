@@ -4,3 +4,8 @@
 .footer__heading {
     border-bottom: 1px solid darkgray;
 }
+@media screen and (max-width: 600px) {
+    .footer {
+        margin-top: 10px;
+    }
+}

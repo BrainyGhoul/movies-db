@@ -3,13 +3,16 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator
 from decimal import Decimal
+import datetime
 from . import variables
 
 
 class User(AbstractUser):
     is_celebrity = models.BooleanField(default=False)
     role = models.CharField(max_length=16, choices=variables.roles, default="0")
-    
+    profile_photo = models.ImageField(upload_to="profile_photo/", default="/profile_photo/default.png")
+    cover_photo = models.ImageField(upload_to="cover_photo/", default="/cover_photo/default.png")
+    bio = models.TextField(blank=True)
 
 # tags associated with titles. for example thriller, action
 class Tag(models.Model):
@@ -43,14 +46,15 @@ class Title(models.Model):
 # the reviews posted by users on movies
 class Review(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="review")
-    movie = models.ForeignKey(Title, on_delete=models.CASCADE, related_name="review")
-    title = models.TextField(max_length=variables.review_title_length)
+    title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name="review")
+    review_title = models.TextField(max_length=variables.review_title_length)
     text = models.TextField()
     rating = models.IntegerField()
     likes = models.ManyToManyField(User, related_name="liked_review")
+    posted_on = models.DateTimeField(default=datetime.datetime.now)
 
     def __str__(self):
-        return self.author.username + ": " + self.movie.title
+        return self.author.username + ": " + self.title.title
 
 # the watchlists created by users
 class Watchlist(models.Model):

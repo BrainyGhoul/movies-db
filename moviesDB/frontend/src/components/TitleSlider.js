@@ -16,6 +16,7 @@ export class TitleSliderApi extends Component {
         if (this.state.data) {
             return (<TitleSlider titles={this.state.data} name={this.props.name} />);
         }
+        console.log(this.state.data);
         return (<></>);
     }
 
@@ -33,22 +34,24 @@ export class TitleSliderApi extends Component {
 export default class TitleSlider extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            titles: this.props.titles
-        };
     }
 
     render() {
-        return (
-            <div className="slider">
-                <h1 className="component__title">{this.props.name}</h1>
-                <div className="slider__nav slider__pre"><Button  onClick={this.previous_button_press}><p>&lt;</p></Button></div>
-                <div className="slider__nav slider__next"><Button onClick={this.next_button_press} ><p>&gt;</p></Button></div>
-                <div className="slider__items">
-                    {this.state.titles.map((title, i) => <SliderItem title={title} key={i} />)}
+        if (this.props.titles) {
+            
+            return (
+                <div className="slider page__component">
+                    <h1 className="component__title">{this.props.name}</h1>
+                    <div className="slider__nav slider__pre"><Button  onClick={this.previous_button_press}><p>&lt;</p></Button></div>
+                    <div className="slider__nav slider__next"><Button onClick={this.next_button_press} ><p>&gt;</p></Button></div>
+                    <div className="slider__items">
+                        {this.props.titles.map((title, i) => <SliderItem title={title} key={i} />)}
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        } else {
+            return <></>
+        }
     }
 
     previous_button_press = (event) => {
@@ -84,7 +87,7 @@ class SliderItem extends Component {
                         </span>
                     </div>
                     <div className="slider__title" >
-                        <a href="#TODO">{this.state.title.title}</a>
+                        <a href="#TODO"><p className="slider__title-text">{this.state.title.title}</p></a>
                     </div>
                     { window.localStorage.getItem("access_token") ?
                     <div className="slider__watchlist-button">

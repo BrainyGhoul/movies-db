@@ -8,6 +8,7 @@ app_name = "frontend"
 urlpatterns = [
     path("", views.index, name="home"),
     path("signup", views.index, name="signup"),
+    path("profile/<str:username>", views.index, name="profile"),
     path("profile", views.index, name="profile"),
     path("title", views.index, name="title"),
     path("watchlists", views.index, name="watchlist"),
