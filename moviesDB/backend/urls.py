@@ -11,8 +11,9 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path("signup/", views.SignUpUser.as_view(), name="signup"),
     path("titles/", views.DisplayTitles.as_view(), name="titles"),
-    path("watchlists/", views.getWatchlists.as_view(), name="watchlists"),
+    path("watchlists/<str:action>", views.getWatchlists.as_view(), name="watchlists"),
     path("profile/<str:username>", views.getProfile.as_view(), name="profile"),
+    path("title/<int:id>", views.getTitle.as_view(), name="title"),
     path("endpoints/", views.endpoints, name="endpoints"),
-
+    # path("add_to_watchlist/<int:id>", views.add_to_watchlist.as_view(), name="add_to_watchlist")
 ]

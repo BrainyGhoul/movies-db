@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -182,3 +183,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     "allauth.account.auth_backend.AuthentcationBackend"
 
 # ]
+
+# SIMPLE_JWT = {
+#     "ACCESS_TOKEN_LIFETIME": datetime.timedelta(seconds=5),
+#     "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
+# }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./titleslider.css";
 import StarRateIcon from "@material-ui/icons/Star";
 import { Button } from "@material-ui/core";
@@ -26,7 +27,7 @@ export class TitleSliderApi extends Component {
             this.setState({
                 data: response.data
             });
-        });        
+        });
     }
 
 }
@@ -87,7 +88,7 @@ class SliderItem extends Component {
                         </span>
                     </div>
                     <div className="slider__title" >
-                        <a href="#TODO"><p className="slider__title-text">{this.state.title.title}</p></a>
+                        <Link to={`/title/${this.state.title.id}`}><p className="slider__title-text">{this.state.title.title}</p></Link>
                     </div>
                     { window.localStorage.getItem("access_token") ?
                     <div className="slider__watchlist-button">
@@ -97,7 +98,7 @@ class SliderItem extends Component {
                 </div>
                 { window.localStorage.getItem("access_token") ?
                 <BookmarkAdd  className="slider__bookmark-flag"/>:
-                <></>
+                null
                 }
             </div>
         )

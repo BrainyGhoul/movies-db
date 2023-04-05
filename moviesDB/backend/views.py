@@ -106,42 +106,17 @@ class DisplayTitles(generics.ListCreateAPIView):
         return queryset
 
 
-class getWatchlists(generics.ListAPIView):
+class getWatchlists(APIView):
     model = models.Watchlist
     serializer_class = serializers.WatchlistSerializer
     permission_classes = (IsAuthenticated,)
 
-    def get_queryset(self):
-        queryset = self.request.user.watchlists.all().order_by("id")
-        return queryset
+    def get(self, *args, **kwargs):
 
-# # this class handles the login part
-# class SignInUser(APIView):
-#     serializer_class = serializers.SignInUserByUsername
+        if kwargs["action"] == "get":
+            queryset = self.request.user.watchlists.all().order_by("id")
+            return JsonResponse(self.serializer_class(queryset, many=True).data, safe=False)
     
-#     # logging in the user
-#     def post(self, request):
-#         # figuring out whether email or username is being used to login
-#         if "@" in request.data["username"]:
-#             self.serializer_class = serializers.SignInUserByEmail
-        
-#         # validating data
-#         serializer = self.serializer_class(data=request.POST)
-#         print(serializer.is_valid())
-#         if serializer.is_valid():
-
-#             # logging in
-#             username = serializer.data.get("username")
-#             password = serializer.data.get("password")
-#             user = authenticate(request, username=username, password=password)
-#             # verifying authentication
-#             if user is not None:
-#                 login(request, user)
-#                 return HttpResponseRedirect(reverse("home"))
-#         print(serializer.data)
-#         # if nothing validates, this message is sent
-#         return JsonResponse({"message": "Invalid username or password"})
-        
 class getProfile(generics.ListAPIView):
     model = models.User
     serializer_class = serializers.UserProfileSerializer
@@ -158,3 +133,16 @@ class getProfile(generics.ListAPIView):
                 return JsonResponse({"message": "invalid username"})
             
         return object
+
+class getTitle(generics.ListAPIView):
+    model = models.Title
+    serializer_class = serializers.TitleSerializer
+
+    def get_queryset(self):
+
+        try:
+            id = self.kwargs.get("id")
+            object = models.Title.objects.filter(id=id)
+            return object
+        except:
+            return JsonResponse({"message": "invalid title"})

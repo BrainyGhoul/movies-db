@@ -41,8 +41,8 @@ export default class ProfilePage extends Component {
                         </div>
                         <div className="profile__description">
                             <h2 className="profile__name">{this.state.profile.name}</h2>
-                            <hr/>
                             <p className="profile__bio">{this.state.profile.bio}</p>
+                            <hr/>
                             <ul className="profile__roles">
                                 {writer} {director} {actor}
                             </ul>

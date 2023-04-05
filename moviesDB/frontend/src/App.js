@@ -45,25 +45,26 @@ export default class App extends Component {
                     <Router>
                         <Navbar />
                         <div className="page">
-                            { window.localStorage.getItem("access_token") ?
-                                // the user can access these pages if theyre logged in
-                                <Routes>
-                                        <Route path="/" element={<HomePage />} />
-                                        <Route path="/profile/*" element={<ProfilePage />} />
-                                        <Route path="/title" element={<TitlePage />} />
+                            <Routes>
+                                <Route path="/" element={<HomePage />} />
+                                <Route path="/title/:id" element={<TitlePage />} />
+                                <Route path="/profile/*" element={<ProfilePage />} />
+
+                                { window.localStorage.getItem("access_token") ?
+                                    // the user can access these pages if theyre logged in
+                                    <>
                                         <Route path="/watchlists" element={<WatchlistPage />} />
-                                        {/* <Route path="*" element={ <PageNotFound /> } /> */}
                                         <Route path="*" element={<Navigate to="/" replace />}/>
-                                </Routes> :
-                                // user can access these pages if they're not logged in
-                                <Routes>
-                                    <Route path="/" element={<HomePage />} />
-                                    <Route path="/signup" element={<SignUpPage />} />
-                                    <Route path="/signin" element={<SignInPage />} />
-                                    <Route path="*" element={ <Navigate to="/" replace /> } />
-                                    {/* <Route path="*" element={ <PageNotFound />} /> */}
-                                </Routes>
-                            }
+                                    </> :
+                                    // user can access these pages if they're not logged in
+                                    <>
+                                        <Route path="/signup" element={<SignUpPage />} />
+                                        <Route path="/signin" element={<SignInPage />} />
+                                    </>
+                                }
+                                {/* <Route path="*" element={ <PageNotFound />} /> */}
+                                <Route path="*" element={ <Navigate to="/" replace /> } />
+                            </Routes>
                         </div>
                         <Footer />
                     </Router>: null

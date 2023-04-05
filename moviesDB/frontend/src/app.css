@@ -29,7 +29,7 @@ body, .main, .App {
 .page {
     min-height: 100vh;
 }
-.centered--vertial {
+.centered--vertical {
     justify-content: center;
 }
 
@@ -69,6 +69,9 @@ body, .main, .App {
 .page__component {
     margin-bottom: 5vh;
 }
+.page__component--padded {
+    padding: 10px;
+}
 .component__title {
     margin: 10px;
 }
@@ -106,3 +109,98 @@ body, .main, .App {
     list-style-position: inside;
     font-size: medium;
 }
+.profile__bio {
+    margin: 5px;
+}
+.title {
+    padding: 20px;
+}
+.titlePage__info--gray {
+    color: gray;
+}
+.titlePage__display {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin: 20px auto;
+    justify-content: center;
+}
+.titlePage__banner {
+    position: relative;
+    justify-items: center;
+    justify-content: center;
+    display: flex;
+}
+.titlePage__banner {
+    /* height: 40vh; */
+    /* filter: blur(20px);
+    -webkit-filter: blur(20px); */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.titlePage__banner--transparent {
+    opacity: 0;
+    width: 60%;
+}
+.titlePage__intro {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+.titlePage__info {
+    width: 50%;
+}
+.titlePage__description {
+    margin: 20px 0;
+    width: 100%;
+    max-height: 6em;
+    overflow: hidden;
+    line-height: 1em;
+}
+.titlePage__rate {
+    flex-grow: 1;
+    min-width: 200px; /* this is just a placeholder*/
+}
+.titlePage__tag {
+    font-size: 0.8em;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 3px;
+    margin: 5px;
+    display: inline-block;
+}
+.titlePage__cover {
+    width: 100%;
+}
+.titlePage__cover-container {
+    width: 15%;
+}
+.page__component--500px {
+    width: 500px;
+}
+
+
+
+
+
+
+
+
+
+/* .titlePage__banner--transparent {
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+} */
+
+/* @media screen and (min-width: 600px) {
+    .titlePage__banner {
+        background-size: cover;
+    }
+}
+@media screen and (max-width: 599px) {
+    .titlePage__banner {
+        background-size: contain;
+    }
+} */

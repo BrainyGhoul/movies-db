@@ -1,11 +1,27 @@
 from rest_framework import serializers
+from . import variables
+
 from . import models
 
 
 class UserSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    role_name = serializers.SerializerMethodField()
+
+
     class Meta:
         model = models.User
-        fields = ("id", "first_name", "last_name", "role", "username")
+        fields = ("id", "first_name", "last_name", "role_name", "username", "profile_photo", "cover_photo", "name")
+
+    def get_name(self, obj):
+        return obj.first_name + " " + obj.last_name
+    
+    def get_role_name(self, obj):
+        for i in variables.roles:
+            if i[0] == obj.role:
+                return i[1]
+        return obj.role
+
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,17 +36,6 @@ class SignUpUserSerializer(serializers.ModelSerializer):
         fields = ("username", "password", "email", "first_name", "last_name")
 
 
-
-class TitleSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(read_only=True, many=True)
-    writers = UserSerializer(read_only=True, many=True)
-    directors = UserSerializer(read_only=True, many=True)
-    stars = UserSerializer(read_only=True, many=True)
-
-    class Meta:
-        model = models.Title
-        fields = ("title", "cover", "description", "release_date", "region", "language", "titleType", "length", "rating", "tags", "writers", "directors", "stars", "banner")
-
 class ReviewSerializer(serializers.ModelSerializer):
     author =  serializers.SlugRelatedField(read_only=True, slug_field="username")
     title = serializers.SlugRelatedField(read_only=True, slug_field="title")
@@ -38,6 +43,29 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Review
         fields = ("author", "title", "review_title", "text", "rating", "likes", "posted_on")
+
+class TitleSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(read_only=True, many=True)
+    writers = UserSerializer(read_only=True, many=True)
+    directors = UserSerializer(read_only=True, many=True)
+    stars = UserSerializer(read_only=True, many=True)
+    titleType = serializers.SerializerMethodField()
+    review = ReviewSerializer(read_only=True, many=True)
+    review_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Title
+        fields = "__all__"
+    
+    def get_titleType(self, obj):
+        for i in variables.titleTypes:
+            if i[0] == obj.titleType:
+                return i[1]
+        return obj.titleType
+
+    def get_review_count(self, obj):
+        return obj.review.all().count()
+
 
 class WatchlistSerializer(serializers.ModelSerializer):
 

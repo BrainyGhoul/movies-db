@@ -26,18 +26,20 @@ api.interceptors.request.use(function (config) {
 // Add a response interceptor
 api.interceptors.response.use(function (response) {
     return response;
-  }, function (error) {
+  }, async (error) => {
     if (error.response.data.code === "token_not_valid" && error.config.url != JSON.parse(window.localStorage.getItem("api_endpoints"))["token_refresh"]) {
-        api.post(JSON.parse(window.localStorage.getItem("api_endpoints"))["token_refresh"], {
+        const response = await api.post(JSON.parse(window.localStorage.getItem("api_endpoints"))["token_refresh"], {
             "refresh": window.localStorage.getItem("refresh_token")
-        }).then(response => {
-            if (response.data.access) {
-                window.localStorage.setItem("access_token", response.data.access);
-                var request = error.config;
-                request._retry = true;
-                return api.request(request);
-            }
-        });
+        })
+        console.log(response);
+        if (response.data.access) {
+            window.localStorage.setItem("access_token", response.data.access);
+            var request = error.config;
+            request._retry = true;
+            return api.request(request);;
+        }
+    
+    // if refresh token is expired, just log out
     } else if (error.config.url === JSON.parse(window.localStorage.getItem("api_endpoints"))["token_refresh"]) {
         window.localStorage.removeItem("access_token");
         window.location.reload();
