@@ -1,9 +1,11 @@
-/* .popup {
-    background-color: white;
-    width: 300px;
-    height: 250px;
+.watchlistIcon__button {
+    text-align: center;
+    margin: auto 5px;
 }
-.popup__list {
-
-    width: 100%;
-} */
+.watchlistIcon__flag {
+    position: absolute;
+    top: 0;
+    left: 5;
+    height: 20px;
+    box-shadow: 5px 5px rgba(88, 88, 88, 0.158);
+}

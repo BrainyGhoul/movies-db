@@ -60,7 +60,7 @@ body, .main, .App {
 }
 .page__60percent {
     width: 60%;
-    max-width: 600px;
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -179,7 +179,29 @@ body, .main, .App {
 .page__component--500px {
     width: 500px;
 }
-
+.watchlistPage {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    align-items: center;
+    width: 100%;
+}
+.watchlistPage__watchlist {
+    width: 100%;
+}
+.watchlistPage__grid {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 5vh;
+    column-gap: 0px;
+    justify-content: center;
+}
+.watchlistPage__gridWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
 
 
 

@@ -122,9 +122,9 @@ const WatchlistIcon = (props) => {
     }
     
     // depending on where it is, its either a button or a watchlist icon
-    var trigger = <BookmarkAdd onClick={handleOpen} className="slider__bookmark-flag" color="primary"/>
+    var trigger = <BookmarkAdd onClick={handleOpen} className="watchlistIcon__flag" color="primary"/>
     if (props.type == "button") {
-        trigger = <div className="slider__watchlist-button">
+        trigger = <div className="watchlistIcon__button">
                     <Button onClick={handleOpen}>WatchList</Button>
                 </div>
     }

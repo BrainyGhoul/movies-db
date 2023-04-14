@@ -134,14 +134,17 @@ class getWatchlists(APIView):
                 watchlist = models.Watchlist.objects.get(name=watchlist_name)
             except:
                 watchlist = models.Watchlist.objects.create(name=watchlist_name, user=self.request.user)
-            # breakpoint()
+
             if title in watchlist.titles.all():
                 watchlist.titles.remove(title.id)
             else:
                 watchlist.titles.add(title.id)
 
+            if watchlist.titles.count() == 0:
+                watchlist.delete()
             watchlist.save()
             return JsonResponse({"message": "success"})
+
         else:
             pass
 
@@ -217,7 +220,7 @@ def TitleRating(request, title_id):
         rating_serialized.save(value=value)
 
         all_ratings = title.rating.only("value")
-        
+
         title.total_rating = all_ratings.aggregate(Sum("value"))["value__sum"] / all_ratings.count()
         title.save()
 

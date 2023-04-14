@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import TitleSlider from "../components/TitleSlider";
+import TitleCard from "../components/TitleCard";
 import api from "../axios";
 
 
@@ -20,12 +20,32 @@ export default class WatchlistPage extends Component {
                     <h1>No Watchlists</h1>
                 </div>
             )
+        } else if (this.state.watchlists) {
+            console.log(this.state.watchlists)
+            return (
+                <div className="watchlistPage">
+                    {
+                        this.state.watchlists?.map((watchlist, item) => {
+                            return (<div className="watchlistPage__watchlist page__component" key={item}>
+                                <h1 className="watchlistPage__title">{watchlist.name}</h1>
+                                <div className="watchlistPage__gridWrapper">
+                                    <div className="watchlistPage__grid">
+                                        {
+                                            watchlist.titles.map((title, title_item) => {
+                                                return <TitleCard title={title} key={title_item} />;
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </div>);
+                        })
+                    }
+                </div>
+            )
+
+        } else {
+            return <></>
         }
-        return (
-            <div>
-                { this.state.watchlists.map((watchlist, i) => <TitleSlider titles={watchlist.titles} key={i} name={watchlist.name} />) }
-            </div>
-        )
     }
 
     get_watchlists = () => {
@@ -37,7 +57,7 @@ export default class WatchlistPage extends Component {
                 })
             } else {
                 this.setState({
-                    watchlists: response.data
+                    watchlists: response.data.filter(n => n.titles.length)
                 });
             }
         });

@@ -16,9 +16,6 @@ export default class TitleCarousel extends Component {
     render () {
         return (
             <div className="carousel page__component">
-                <h2 className="component__title">
-                    {this.props.name}
-                </h2>
                 <Carousel className="carousel">
                     {this.state.titles.map((title, i) => <Item title={title} key={i} /> )}
                 </Carousel>

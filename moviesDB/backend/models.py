@@ -36,7 +36,7 @@ class Title(models.Model):
     tags = models.ManyToManyField(Tag, related_name="title", blank=True)
     writers = models.ManyToManyField(User, related_name="titles_written")
     directors = models.ManyToManyField(User, related_name="titles_directed")
-    stars = models.ManyToManyField(User, related_name="title_starred")
+    stars = models.ManyToManyField(User, related_name="titles_starred")
     popular = models.BooleanField(default=False)
     
 

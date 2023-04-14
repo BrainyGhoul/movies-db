@@ -26,39 +26,44 @@ export default class ProfilePage extends Component {
         if (this.state.profile.titles_starred) {
             actor = <li>Actor</li>;
         }
-        return (
-            <div className="centered">
-                <div className="page__60percent">
-
-
-                    {/* this is the main profile with pictures */}
-                    <div className="profile__card page__component" >
-                        <div className="profile__cover">
-                            <img src={this.state.profile.cover_photo} alt={this.state.profile.name + " cover_photo"} />
-                            <div className="profile__photo">
-                                <img src={this.state.profile.profile_photo} alt={this.state.profile.name + " profile_photo"} />
+        if (this.state.profile.name) {
+            return (
+                <div className="centered">
+                    <div className="page__60percent">
+    
+    
+                        {/* this is the main profile with pictures */}
+                        <div className="profile__card page__component" >
+                            <div className="profile__cover">
+                                <img src={this.state.profile.cover_photo} alt={this.state.profile.name + " cover_photo"} />
+                                <div className="profile__photo">
+                                    <img src={this.state.profile.profile_photo} alt={this.state.profile.name + " profile_photo"} />
+                                </div>
+                            </div>
+                            <div className="profile__description">
+                                <h2 className="profile__name">{this.state.profile.name}</h2>
+                                <p className="profile__bio">{this.state.profile.bio}</p>
+                                <hr/>
+                                <ul className="profile__roles">
+                                    {writer} {director} {actor}
+                                </ul>
                             </div>
                         </div>
-                        <div className="profile__description">
-                            <h2 className="profile__name">{this.state.profile.name}</h2>
-                            <p className="profile__bio">{this.state.profile.bio}</p>
-                            <hr/>
-                            <ul className="profile__roles">
-                                {writer} {director} {actor}
-                            </ul>
-                        </div>
+
+                        {/* sliders with all the titles related */}
+                        <TitleSlider name="Directed" titles={this.state.profile.titles_directed} />
+                        <TitleSlider name="Written" titles={this.state.profile.titles_written} />
+                        <TitleSlider name="Acted in" titles={this.state.profile.titles_starred} />
+    
+                        <Reviews reviews={this.state.profile.review} />
+    
+    
                     </div>
-                    {/* sliders with all the titles related */}
-                    <TitleSlider name="Directed" titles={this.state.profile.titles_directed} />
-                    <TitleSlider name="Written" titles={this.state.profile.titles_written} />
-                    <TitleSlider name="Acted in" titles={this.state.profile.titles_starred} />
-
-                    <Reviews reviews={this.state.profile.review} />
-
-
                 </div>
-            </div>
-        )
+            )
+
+        }
+        return <></>
     }
 
     get_profile = () => {
@@ -76,7 +81,6 @@ export default class ProfilePage extends Component {
                 this.setState({
                     profile: data
                 });
-                console.log(data)
             }
         });
     }
