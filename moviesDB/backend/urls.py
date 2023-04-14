@@ -15,5 +15,6 @@ urlpatterns = [
     path("profile/<str:username>", views.getProfile.as_view(), name="profile"),
     path("title/<int:id>", views.getTitle.as_view(), name="title"),
     path("endpoints/", views.endpoints, name="endpoints"),
-    # path("add_to_watchlist/<int:id>", views.add_to_watchlist.as_view(), name="add_to_watchlist")
+    path("rating/<int:title_id>", views.TitleRating, name="rating")
+    # path("add_to_watchlist/", views.add_to_watchlist, name="add_to_watchlist")
 ]

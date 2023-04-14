@@ -16,7 +16,7 @@ export default class WatchlistPage extends Component {
     render () {
         if (this.state.no_watchlists) {
             return (
-                <div className=" centered centered--vertical">
+                <div className="centered centered--vertical">
                     <h1>No Watchlists</h1>
                 </div>
             )

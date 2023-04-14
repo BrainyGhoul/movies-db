@@ -88,16 +88,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = models.User
         fields = ("titles_written", "titles_directed", "titles_starred", "review", "liked_review", "first_name", "last_name", "profile_photo", "role", "cover_photo", "is_celebrity", "bio")
 
+class RatingSerializer(serializers.ModelSerializer):
 
-# class SignInUserByEmail(serializers.ModelSerializer):
-
-#     class Meta:
-#         model = models.User
-#         fields = ("email", "password")
-
-
-# class SignInUserByUsername(serializers.ModelSerializer):
-
-#     class Meta:
-#         model = models.User
-#         fields = ("username", "password")
+    class Meta:
+        model = models.Rating
+        fields = "__all__"

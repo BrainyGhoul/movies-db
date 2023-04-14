@@ -4,9 +4,12 @@ import datetime
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from django.urls import get_resolver
+from django.contrib.auth.decorators import login_required
 from rest_framework import generics
 from django.core.paginator import Paginator
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view
+from django.db.models import Sum
 from . import urls
 from . import serializers
 from . import models
@@ -21,6 +24,12 @@ def endpoints(request):
             endpoints = {pattern.name: app_resolver.pattern._route + pattern.pattern._route for pattern in app_resolver.url_patterns}
             break
     return JsonResponse(endpoints)
+
+
+# # adds or removes movie from watchlists
+# @login_required
+# def add_to_watchlist(request):
+
 
 # registering users
 class SignUpUser(APIView):
@@ -111,6 +120,31 @@ class getWatchlists(APIView):
     serializer_class = serializers.WatchlistSerializer
     permission_classes = (IsAuthenticated,)
 
+    def post(self, *args, **kwargs):
+
+        if kwargs["action"] == "add":
+            
+            watchlist_name = self.request.data.get("watchlist")
+            title_id = self.request.data.get("title_id")
+            title = models.Title.objects.get(id=title_id)
+            if not watchlist_name and title_id:
+                return JsonResponse({"error": "The data is not available"})
+            
+            try:
+                watchlist = models.Watchlist.objects.get(name=watchlist_name)
+            except:
+                watchlist = models.Watchlist.objects.create(name=watchlist_name, user=self.request.user)
+            # breakpoint()
+            if title in watchlist.titles.all():
+                watchlist.titles.remove(title.id)
+            else:
+                watchlist.titles.add(title.id)
+
+            watchlist.save()
+            return JsonResponse({"message": "success"})
+        else:
+            pass
+
     def get(self, *args, **kwargs):
 
         if kwargs["action"] == "get":
@@ -146,3 +180,46 @@ class getTitle(generics.ListAPIView):
             return object
         except:
             return JsonResponse({"message": "invalid title"})
+
+@login_required
+@api_view(['GET', 'POST'])
+def TitleRating(request, title_id):
+
+    try:
+        title = models.Title.objects.get(id=title_id)
+    except:
+        return JsonResponse({"error": "invalid title id"})
+    try:
+        rating = title.rating.get(user=request.user)
+    except:
+        rating = None
+
+    if request.method == "GET":
+        if rating:
+            rating = rating.value
+        return JsonResponse({"message": "success", "rating": rating})
+
+    
+    elif request.method == "POST":
+        value = request.data.get("rating")
+
+        if rating:
+            rating_serialized = serializers.RatingSerializer(rating, data={"user":request.user.id, "value": value, "title":title.id})
+        else:
+            rating_serialized = serializers.RatingSerializer(data={"user":request.user.id, "value":value, "title":title.id})
+
+        if not rating_serialized.is_valid():
+            print("inbalid")
+            print(rating_serialized.errors)
+            return JsonResponse({"error": "rating value invalid"})
+
+        print("abhi tak to sab thik hai")
+        rating_serialized.save(value=value)
+
+        all_ratings = title.rating.only("value")
+        
+        title.total_rating = all_ratings.aggregate(Sum("value"))["value__sum"] / all_ratings.count()
+        title.save()
+
+        return JsonResponse({"message": "rating was updated or created successfully"})
+        

@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import "./titleslider.css";
 import StarRateIcon from "@material-ui/icons/Star";
 import { Button } from "@material-ui/core";
-import BookmarkAdd from "@material-ui/icons/Bookmark";
+
 import api from "../axios";
+import WatchlistIcon from "../icons/watchlist_icon";
 
 export class TitleSliderApi extends Component {
     constructor(props) {
@@ -82,33 +83,18 @@ class SliderItem extends Component {
                 </div>
                 <div className="slider__info" >
                     <div className="slider__rating">
-                        <StarRateIcon />
+                        <StarRateIcon color="primary" />
                         <span>
-                        {this.state.title.rating}
+                            {this.state.title.total_rating}
                         </span>
                     </div>
                     <div className="slider__title" >
                         <Link to={`/title/${this.state.title.id}`}><p className="slider__title-text">{this.state.title.title}</p></Link>
                     </div>
-                    { window.localStorage.getItem("access_token") ?
-                    <div className="slider__watchlist-button">
-                        <Button onClick="#TODO">WatchList</Button>
-                    </div>:<></>
-                    }
+                    <WatchlistIcon title_id={this.state.title.id} type="button"/>
                 </div>
-                { window.localStorage.getItem("access_token") ?
-                <BookmarkAdd  className="slider__bookmark-flag"/>:
-                null
-                }
+                <WatchlistIcon title_id={this.state.title.id} />
             </div>
         )
     }
-
-    // watchlist = (event) => {
-    //     var title = this.state.title;
-    //     title[""]
-    //     this.setState({
-    //         title: 
-    //     })
-    // }
 }

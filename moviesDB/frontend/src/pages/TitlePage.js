@@ -1,23 +1,38 @@
-import { Button } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../axios";
 import UserGrid from "../components/UserGrid";
 import Reviews from "../components/Reviews";
+import Rating from '@mui/material/Rating';
+
 
 
 export default function TitlePage(props) {
     
     const { id } = useParams();
     const [title, setTitle] = useState({});
+    const [rating, setRating] = useState(0);
+
 
     useEffect(() => {
         api.get(JSON.parse(window.localStorage.getItem("api_endpoints"))["title"] + id)
         .then(response => {
             setTitle(response.data[0]);
         });
+        api.get(JSON.parse(window.localStorage.getItem("api_endpoints"))["rating"] + id)
+        .then(response => {
+            if (response.data.rating)
+                setRating(response.data.rating)
+        });
     }, [])
-    console.log(title)
+
+    const change_rating = (event, newValue) => {
+        setRating(newValue);
+        console.log(newValue);
+        api.post(JSON.parse(window.localStorage.getItem("api_endpoints"))["rating"] + id, {"rating": newValue});
+    }
+
+
     if (title.title) {
 
         return (
@@ -45,7 +60,13 @@ export default function TitlePage(props) {
                         </div>
                     </div>
                     <div className="titlePage__rate">
-                        
+                        <h4>Movies Db Rating: {title.total_rating}</h4>
+                        <h4>Your Rating:</h4>
+                        <Rating
+                            name="title-rating"
+                            value={rating}
+                            onChange={change_rating}
+                        />
                     </div>
                 </div>
 

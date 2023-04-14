@@ -1,7 +1,7 @@
 from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from decimal import Decimal
 import datetime
 from . import variables
@@ -32,7 +32,7 @@ class Title(models.Model):
     language = models.CharField(max_length=32)
     titleType = models.CharField(max_length=16, choices=variables.titleTypes)
     length = models.DurationField()
-    rating = models.DecimalField(decimal_places=1, max_digits=2,validators=[MinValueValidator(Decimal("1.0"))])
+    total_rating = models.DecimalField(decimal_places=1, max_digits=2, validators=[MinValueValidator(Decimal("0.0")), MaxValueValidator(Decimal("5.0"))], default=0.0)
     tags = models.ManyToManyField(Tag, related_name="title", blank=True)
     writers = models.ManyToManyField(User, related_name="titles_written")
     directors = models.ManyToManyField(User, related_name="titles_directed")
@@ -56,9 +56,20 @@ class Review(models.Model):
     def __str__(self):
         return self.author.username + ": " + self.title.title
 
+
+class Rating(models.Model):
+    title = models.ForeignKey(Title, related_name="rating", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="rating", on_delete=models.CASCADE)
+    value = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+
+    class Meta:
+        unique_together = (('title', 'user'),)
+
+
+
 # the watchlists created by users
 class Watchlist(models.Model):
-    name = models.CharField(max_length=variables.watchlist_name_length)
+    name = models.CharField(max_length=variables.watchlist_name_length, unique=True)
     titles = models.ManyToManyField(Title, related_name="watchlist")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlists")
 

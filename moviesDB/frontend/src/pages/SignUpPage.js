@@ -25,7 +25,7 @@ export default class SignUpPage extends Component {
         return (
             <div className="sign signup">
                 {/* centered div  */}
-                <div className="centered centered--vertial">
+                <div className="centered centered--vertical">
 
                     <img className="sign__logo" src={window.localStorage.getItem("logo_url")} alt="logo" />
                     <div className="sign__form-container">
